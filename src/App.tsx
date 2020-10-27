@@ -1,14 +1,16 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// import logo from './logo.svg';
+// import './App.css';
+import DirectoryMenu from './views/directoryMenu';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      <DirectoryMenu />
+      {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.tsxxxxx</code> and save to reload.
+          Edittt <code>src/App.tsxxxxx</code> and save to reload.
         </p>
         <a
           className="App-link"
@@ -18,7 +20,7 @@ function App() {
         >
           Learn React
         </a>
-      </header>
+      </header> */}
     </div>
   );
 }
