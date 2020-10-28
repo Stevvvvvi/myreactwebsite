@@ -1,7 +1,7 @@
 import React from 'react';
 // import logo from './logo.svg';
-// import './App.css';
-import DirectoryMenu from './views/directoryMenu';
+import './App.css';
+import DirectoryMenu from './views/directory-menu/directoryMenu';
 
 function App() {
   return (
