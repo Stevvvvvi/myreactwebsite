@@ -6,9 +6,27 @@ $main-color:black;
     font-size: 12px;
     color:$main-color;
 }
+@mixin borderChange {
+    width:calc(50% + 7.5px);
+}
 .group{
     position: relative;
     margin:45px 0;
+    .border-animation{
+        content: "";
+        position: absolute;
+        top:39px;
+        height:2px;
+        width:0%;
+        background-color: red;
+        transition: 1s ease width;
+        &.left{
+            right:calc(50% - 7.5px);
+        }
+        &.right{
+            left:calc(50% + 7.5px);
+        }
+    }
     .form-input{
         background: none;
         background-color: white;
@@ -21,12 +39,15 @@ $main-color:black;
         border-radius: 0;
         border-bottom: 1px solid $sub-color;
         margin:25px 0;
-
+        
         &:focus {
             outline:none;
         }
         &:focus + .form-input-label{
             @include shrinkLabel();
+        }
+        &:focus ~ .border-animation{
+            @include borderChange();
         }
         
     }

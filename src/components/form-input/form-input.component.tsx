@@ -19,6 +19,8 @@ const FormInput=({handleChange,label,...otherProps}:props)=>{
                     {label}
                 </label>
             }
+            <span className="border-animation left"></span>
+            <span className="border-animation right"></span>
         </div>
     )
 }
