@@ -5,6 +5,7 @@ import DirectoryMenu from './views/directory-menu/directoryMenu';
 import {Route,Switch} from 'react-router-dom';
 import ShopPage from './views/shop/shop.component';
 import Header from './components/header/header.component';
+import SigninAndSignup from './views/sigin-and-sign-up/sign-in-and-sign-up.component';
 
 const Topic=(props:any)=>{
   console.log(props);
@@ -22,6 +23,7 @@ function App() {
       <Switch>
         <Route exact path='/' component={DirectoryMenu}/>
         <Route path='/shop' component={ShopPage}/>
+        <Route path='/login' component={SigninAndSignup} />
       </Switch>
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
