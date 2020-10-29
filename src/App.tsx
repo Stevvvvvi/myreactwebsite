@@ -4,6 +4,7 @@ import './App.css';
 import DirectoryMenu from './views/directory-menu/directoryMenu';
 import {Route,Switch} from 'react-router-dom';
 import ShopPage from './views/shop/shop.component';
+import Header from './components/header/header.component';
 
 const Topic=(props:any)=>{
   console.log(props);
@@ -17,6 +18,7 @@ const Topic=(props:any)=>{
 function App() {
   return (
     <div className="App">
+      <Header />
       <Switch>
         <Route exact path='/' component={DirectoryMenu}/>
         <Route path='/shop' component={ShopPage}/>
