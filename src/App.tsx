@@ -3,6 +3,7 @@ import React from 'react';
 import './App.css';
 import DirectoryMenu from './views/directory-menu/directoryMenu';
 import {Route,Switch} from 'react-router-dom';
+import ShopPage from './views/shop/shop.component';
 
 const Topic=(props:any)=>{
   console.log(props);
@@ -18,7 +19,7 @@ function App() {
     <div className="App">
       <Switch>
         <Route exact path='/' component={DirectoryMenu}/>
-        <Route path='/topic' component={Topic}/>
+        <Route path='/shop' component={ShopPage}/>
       </Switch>
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
