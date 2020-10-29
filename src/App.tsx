@@ -2,11 +2,24 @@ import React from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import DirectoryMenu from './views/directory-menu/directoryMenu';
+import {Route,Switch} from 'react-router-dom';
+
+const Topic=(props:any)=>{
+  console.log(props);
+  return (
+    <div>
+      <h1>hello</h1>
+    </div>
+  )
+}
 
 function App() {
   return (
     <div className="App">
-      <DirectoryMenu />
+      <Switch>
+        <Route exact path='/' component={DirectoryMenu}/>
+        <Route path='/topic' component={Topic}/>
+      </Switch>
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>

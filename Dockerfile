@@ -7,7 +7,7 @@ COPY package.json ./
 # COPY package-lock.json ./
 # COPY yarn.lock ./
 COPY . ./
-# RUN yarn add node-sass
+# RUN yarn add --force node-sass
 RUN yarn
 #RUN yarn install react-scripts@3.4.1 -g
 
