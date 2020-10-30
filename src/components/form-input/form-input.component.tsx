@@ -6,7 +6,7 @@ interface props{
     label?:string;
     value?:string;
     name?:string;
-    type?:'email'|'password';
+    type?:'email'|'password'|'text';
     required:boolean;
 }
 const FormInput=({handleChange,label,...otherProps}:props)=>{
