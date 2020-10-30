@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import CustomButton from '../custom-button/custom-button.component';
 import FormInput from '../form-input/form-input.component';
-import {signInWithGoogle} from '../../firebase/firebase.utils';
+import {auth, signInWithGoogle} from '../../firebase/firebase.utils';
 
 import './sign-in.styles.scss';
 
@@ -9,7 +9,14 @@ const Signin=()=>{
     const [userInfo,setUserInfo]=useState({email:'',password:''})
     const handleSubmit=async (event:FormEvent<HTMLFormElement>)=>{
         event.preventDefault();
-        setUserInfo({ email: '', password: '' });
+        const {email,password}=userInfo;
+
+        try {
+            await auth.signInWithEmailAndPassword(email,password);
+            setUserInfo({email:'',password:''})
+        }catch (e){
+            console.log(e);
+        }
         //console.log(userInfo);
     }
     const handleChange=(event:ChangeEvent<HTMLInputElement>)=>{
