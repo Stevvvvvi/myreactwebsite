@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import DirectoryMenu from './views/directory-menu/directoryMenu';
@@ -6,6 +6,7 @@ import {Route,Switch} from 'react-router-dom';
 import ShopPage from './views/shop/shop.component';
 import Header from './components/header/header.component';
 import SigninAndSignup from './views/sigin-and-sign-up/sign-in-and-sign-up.component';
+import {auth} from './firebase/firebase.utils';
 
 const Topic=(props:any)=>{
   console.log(props);
@@ -16,10 +17,27 @@ const Topic=(props:any)=>{
   )
 }
 
+interface userProps{
+  currentUser:null|typeof auth.currentUser;
+}
+
+
 function App() {
+  const [user,setUser]=useState<userProps>({ currentUser:  null });
+  
+  useEffect(()=>{
+    let unSubscribeFromAuth: { (): void; (): void; } | null=null;
+    unSubscribeFromAuth=auth.onAuthStateChanged(user=>{
+      setUser({currentUser:user});
+      console.log(user);
+    })
+    return ()=>{
+      unSubscribeFromAuth && unSubscribeFromAuth()
+    }
+  },[auth.currentUser])
   return (
     <div className="App">
-      <Header />
+      <Header currentUser={user.currentUser}/>
       <Switch>
         <Route exact path='/' component={DirectoryMenu}/>
         <Route path='/shop' component={ShopPage}/>
