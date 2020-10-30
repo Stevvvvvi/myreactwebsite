@@ -6,7 +6,7 @@ import {Route,Switch} from 'react-router-dom';
 import ShopPage from './views/shop/shop.component';
 import Header from './components/header/header.component';
 import SigninAndSignup from './views/sigin-and-sign-up/sign-in-and-sign-up.component';
-import {auth} from './firebase/firebase.utils';
+import {auth, createUserProfileDocument} from './firebase/firebase.utils';
 
 const Topic=(props:any)=>{
   console.log(props);
@@ -18,7 +18,7 @@ const Topic=(props:any)=>{
 }
 
 interface userProps{
-  currentUser:null|typeof auth.currentUser;
+  currentUser:null|any;
 }
 
 
@@ -27,9 +27,23 @@ function App() {
   
   useEffect(()=>{
     let unSubscribeFromAuth: { (): void; (): void; } | null=null;
-    unSubscribeFromAuth=auth.onAuthStateChanged(user=>{
-      setUser({currentUser:user});
-      console.log(user);
+    unSubscribeFromAuth=auth.onAuthStateChanged(async userAuth=>{
+      if (userAuth){
+        const userRef=await createUserProfileDocument(userAuth);
+        userRef?.onSnapshot(snapShot=>{
+          setUser({currentUser:{
+            id:snapShot.id,
+            ...snapShot.data()
+          }
+        })
+        });
+        console.log(user);
+      }else{
+        setUser({currentUser:userAuth})
+        console.log(user);
+      }
+      //setUser({currentUser:user});
+      //console.log(user);
     })
     return ()=>{
       unSubscribeFromAuth && unSubscribeFromAuth()
