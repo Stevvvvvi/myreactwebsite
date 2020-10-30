@@ -5,7 +5,7 @@ import './custom-button.styles.scss';
 
 interface props{
     children:string;
-    type?:'submit';
+    type?:'submit'|'button';
     onClick?:((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void);
     isGoogleSignIn?:boolean;
 }
