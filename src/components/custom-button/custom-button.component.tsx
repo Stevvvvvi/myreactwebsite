@@ -8,9 +8,10 @@ interface props{
     type?:'submit'|'button';
     onClick?:((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void);
     isGoogleSignIn?:boolean;
+    inverted?:boolean;
 }
-const CustomButton=({children,isGoogleSignIn,...otherProps}:props)=>{
-    return <button className={`${isGoogleSignIn && 'google-sign-in'} custom-button`} {...otherProps}>
+const CustomButton=({children,isGoogleSignIn,inverted,...otherProps}:props)=>{
+    return <button className={`${isGoogleSignIn && 'google-sign-in'} custom-button ${inverted && 'inverted'}`} {...otherProps}>
         {children}
     </button>
         

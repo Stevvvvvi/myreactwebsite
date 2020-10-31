@@ -1,11 +1,11 @@
 import React from 'react';
-import CollectionItem, { collectionProps } from '../collection-item/collection-item.component';
+import CollectionItem, { collectionProps, shopProduct } from '../collection-item/collection-item.component';
 
 import './collection-preview.styles.scss';
 
 interface props{
     title:string;
-    items: collectionProps[];
+    items: shopProduct[];
 }
 const CollectionPreview=({title,items}:props)=>{
     return (
@@ -15,8 +15,8 @@ const CollectionPreview=({title,items}:props)=>{
                 {
                     items
                     .filter((item,idx)=>idx<4)
-                    .map(({id,...itemProps}:collectionProps)=>(
-                        <CollectionItem key={id} id={id}{...itemProps}></CollectionItem>
+                    .map((item:shopProduct)=>(
+                        <CollectionItem key={item.id} item={item}></CollectionItem>
                     ))
                 }
             </div>
