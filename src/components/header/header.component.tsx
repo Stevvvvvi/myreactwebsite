@@ -6,13 +6,17 @@ import {ReactComponent as Logo
 import { auth } from '../../firebase/firebase.utils';
 import './header.styles.scss';
 import {connect, RootStateOrAny } from 'react-redux';
-import { ReducerStateProps } from '../../redux/root-reducer';
 import CartIcon from '../cart-icon/cart-icon.component';
+import CartDropDown from '../cart-dropdown/cart-dropdown.component';
+import { AuthUser, UserState } from '../../redux/user/user.reducer';
+import { cartState } from '../../redux/cart/cart.reducer';
+import { rootState } from '../../redux/root-reducer';
 
 interface props{
-    currentUser:any;
+    currentUser:AuthUser|null;
+    hidden:boolean;
 }
-const Header=({currentUser}:props)=>{
+const Header=({currentUser,hidden}:props)=>{
     return(
         <div className='header'>
             <Link className='logo-container' to='/'>
@@ -33,12 +37,17 @@ const Header=({currentUser}:props)=>{
                 }
                 <CartIcon />
             </div>
+            {
+                !hidden &&<CartDropDown />
+            }
+            
         </div>
 
         
     )
 }
-const mapStateToProps=(state: RootStateOrAny)=>({
-    currentUser:state.user.currentUser
+const mapStateToProps=({user:{currentUser},cart:{hidden}}: rootState)=>({
+    currentUser:currentUser,
+    hidden:hidden
 })
-export default connect<ReducerStateProps>(mapStateToProps)(Header);
+export default connect(mapStateToProps)(Header);

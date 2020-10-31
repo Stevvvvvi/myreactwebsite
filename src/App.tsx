@@ -1,4 +1,4 @@
-import React, { Dispatch, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import DirectoryMenu from './views/directory-menu/directoryMenu';
@@ -9,6 +9,7 @@ import SigninAndSignup from './views/sigin-and-sign-up/sign-in-and-sign-up.compo
 import {auth, createUserProfileDocument} from './firebase/firebase.utils';
 import { connect, RootStateOrAny } from 'react-redux';
 import { setCurrentUser } from './redux/user/user.action';
+import { AuthUser } from './redux/user/user.reducer';
 
 const Topic=(props:any)=>{
   console.log(props);
@@ -80,6 +81,6 @@ const mapStateToProps=({user}:RootStateOrAny)=>({
   currentUser:user.currentUser
 })
 const mapDispatchToProps=(dispatch:any)=>({
-  setCurrentUser:(user: any)=>dispatch(setCurrentUser(user))
+  setCurrentUser:(user: AuthUser)=>dispatch(setCurrentUser(user))
 })
 export default connect(mapStateToProps,mapDispatchToProps)(App);
