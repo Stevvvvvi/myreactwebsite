@@ -87,6 +87,10 @@ interface mapStateInterface{
 const mapStateToProps=createStructuredSelector<rootState,mapStateInterface>({
   currentUser:selectCurrentUser
 })
+// old mapstate to prop way
+const mapStateToPropss=({user:{currentUser}}:rootState)=>({
+  currentUser:currentUser
+})
 const mapDispatchToProps=(dispatch: (arg0: { type: string; payload: UserState; }) => any)=>({
   setCurrentUser:(user: UserState)=>dispatch(setCurrentUser(user))
 })
