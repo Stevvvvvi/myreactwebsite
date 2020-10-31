@@ -10,6 +10,10 @@ import {auth, createUserProfileDocument} from './firebase/firebase.utils';
 import { connect, RootStateOrAny } from 'react-redux';
 import { setCurrentUser } from './redux/user/user.action';
 import { AuthUser, UserState } from './redux/user/user.reducer';
+import { rootState } from './redux/root-reducer';
+import { selectCurrentUser } from './redux/user/user.selector';
+import {createStructuredSelector} from 'reselect';
+
 
 const Topic=(props:any)=>{
   console.log(props);
@@ -20,12 +24,12 @@ const Topic=(props:any)=>{
   )
 }
 
-interface userProps{
-  currentUser:null|any;
+interface props extends mapStateInterface{
+  setCurrentUser:typeof setCurrentUser
 }
 
 
-function App(props: any) {
+function App(props: props) {
   //const [user,setUser]=useState<userProps>({ currentUser:  null });
   useEffect(()=>{
     const {setCurrentUser}=props;
@@ -42,7 +46,7 @@ function App(props: any) {
         });
         //console.log(user);
       }else{
-        setCurrentUser(userAuth)
+        setCurrentUser({currentUser:userAuth})
         //console.log(user);
       }
       //setUser({currentUser:user});
@@ -77,10 +81,13 @@ function App(props: any) {
     </div>
   );
 }
-const mapStateToProps=({user}:RootStateOrAny)=>({
-  currentUser:user.currentUser
+interface mapStateInterface{
+  currentUser:AuthUser|null
+}
+const mapStateToProps=createStructuredSelector<rootState,mapStateInterface>({
+  currentUser:selectCurrentUser
 })
-const mapDispatchToProps=(dispatch:any)=>({
+const mapDispatchToProps=(dispatch: (arg0: { type: string; payload: UserState; }) => any)=>({
   setCurrentUser:(user: UserState)=>dispatch(setCurrentUser(user))
 })
 export default connect(mapStateToProps,mapDispatchToProps)(App);

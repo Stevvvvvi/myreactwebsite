@@ -12,10 +12,11 @@ import { AuthUser, UserState } from '../../redux/user/user.reducer';
 import { cartState } from '../../redux/cart/cart.reducer';
 import { rootState } from '../../redux/root-reducer';
 import { setCurrentUser } from '../../redux/user/user.action';
+import {createStructuredSelector} from 'reselect';
+import { selectCurrentUser } from '../../redux/user/user.selector';
+import { selectCartHidden } from '../../redux/cart/cart.selector';
 
-interface props{
-    currentUser:AuthUser|null;
-    hidden:boolean;
+interface props extends mapStateInterface{
     setCurrentUser:typeof setCurrentUser;
 }
 const Header=({currentUser,hidden,setCurrentUser}:props)=>{
@@ -52,9 +53,13 @@ const Header=({currentUser,hidden,setCurrentUser}:props)=>{
         
     )
 }
-const mapStateToProps=({user:{currentUser},cart:{hidden}}: rootState)=>({
-    currentUser:currentUser,
-    hidden:hidden
+interface mapStateInterface{
+    currentUser:AuthUser|null;
+    hidden:boolean
+}
+const mapStateToProps=createStructuredSelector<rootState,mapStateInterface>({
+    currentUser:selectCurrentUser,
+    hidden:selectCartHidden
 })
 const mapDispatchToProps=(dispatch: any)=>({
     setCurrentUser:(user:UserState)=>dispatch(setCurrentUser(user))

@@ -2,12 +2,12 @@ import { UserActionTypes } from "./user.types";
 
 export interface AuthUser{
     id:string,
-    displayName:string,
-    email:string,
-    createAt:Date
+    displayName?:string,
+    email?:string,
+    createAt?:Date
 }
 export interface UserState{
-    currentUser:AuthUser|null
+    currentUser:AuthUser | null
 }
 
 const INITIAL_STATE:UserState={
