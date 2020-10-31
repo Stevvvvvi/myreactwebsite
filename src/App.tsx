@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, useEffect, useState } from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import DirectoryMenu from './views/directory-menu/directoryMenu';
-import {Route,Switch} from 'react-router-dom';
+import {Redirect, Route,Switch} from 'react-router-dom';
 import ShopPage from './views/shop/shop.component';
 import Header from './components/header/header.component';
 import SigninAndSignup from './views/sigin-and-sign-up/sign-in-and-sign-up.component';
 import {auth, createUserProfileDocument} from './firebase/firebase.utils';
+import { connect, RootStateOrAny } from 'react-redux';
+import { setCurrentUser } from './redux/user/user.action';
 
 const Topic=(props:any)=>{
   console.log(props);
@@ -22,25 +24,25 @@ interface userProps{
 }
 
 
-function App() {
-  const [user,setUser]=useState<userProps>({ currentUser:  null });
-  
+function App(props: any) {
+  //const [user,setUser]=useState<userProps>({ currentUser:  null });
   useEffect(()=>{
+    const {setCurrentUser}=props;
     let unSubscribeFromAuth: { (): void; (): void; } | null=null;
     unSubscribeFromAuth=auth.onAuthStateChanged(async userAuth=>{
       if (userAuth){
         const userRef=await createUserProfileDocument(userAuth);
         userRef?.onSnapshot(snapShot=>{
-          setUser({currentUser:{
+          setCurrentUser({currentUser:{
             id:snapShot.id,
             ...snapShot.data()
           }
         })
         });
-        console.log(user);
+        //console.log(user);
       }else{
-        setUser({currentUser:userAuth})
-        console.log(user);
+        setCurrentUser(userAuth)
+        //console.log(user);
       }
       //setUser({currentUser:user});
       //console.log(user);
@@ -51,11 +53,11 @@ function App() {
   },[auth.currentUser])
   return (
     <div className="App">
-      <Header currentUser={user.currentUser}/>
+      <Header />
       <Switch>
         <Route exact path='/' component={DirectoryMenu}/>
         <Route path='/shop' component={ShopPage}/>
-        <Route path='/login' component={SigninAndSignup} />
+        <Route exact path='/login' render={()=>props.currentUser ? (<Redirect to='/' /> ):(<SigninAndSignup />)} />
       </Switch>
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
@@ -74,5 +76,10 @@ function App() {
     </div>
   );
 }
-
-export default App;
+const mapStateToProps=({user}:RootStateOrAny)=>({
+  currentUser:user.currentUser
+})
+const mapDispatchToProps=(dispatch:any)=>({
+  setCurrentUser:(user: any)=>dispatch(setCurrentUser(user))
+})
+export default connect(mapStateToProps,mapDispatchToProps)(App);
